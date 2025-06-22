@@ -3,80 +3,60 @@ package user.member;
 import batism.Batism;
 import enums.CivilStatus;
 import enums.Role;
-import jakarta.persistence.*;
-import user.User;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import user.child.ChildSummary;
 
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
-@Entity
-public class Member extends User {
+public class MemberRequest {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String name;
+
+    @NotBlank
     private Date birthdate;
+
+    @NotEmpty
+    @Size(min = 11, max = 11)
     private String cpf;
+
+    @NotBlank
     private String email;
+
+    @NotBlank
     private String phone;
     private String groupId;
+
+    @NotBlank
     private String street;
+
+    @NotBlank
     private String houseNumber;
+
+    @NotBlank
     private String city;
+
+    @NotEmpty
+    @Size(min = 2, max = 3)
     private String state;
+
+    @NotBlank
     private String zipCode;
+
+    @NotBlank
     private String neighborhood;
-
-    @OneToOne(cascade = CascadeType.ALL)
     private Batism batism;
+
     private CivilStatus civilStatus;
-
     //private MemberSummary spouse;
-
-//    @OneToMany(mappedBy = "child", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ChildSummary> children;
     private Role role;
     private  boolean isActive = true;
     private boolean isImageAuthorized = true;
     private LocalDateTime createdAt = LocalDateTime.now();
-
-    public Member() { }
-
-    public Member(Long id, String name, String phone, String password, LocalDateTime createdAt, Long id1, String name1, Date birthdate, String cpf, String email, String phone1, String groupId, String street, String houseNumber, String city, String state, String zipCode, String neighborhood, Batism batism, CivilStatus civilStatus, List<ChildSummary> children, Role role, boolean isActive, boolean isImageAuthorized, LocalDateTime createdAt1) {
-        super(id, name, phone, password, createdAt);
-        this.id = id1;
-        this.name = name1;
-        this.birthdate = birthdate;
-        this.cpf = cpf;
-        this.email = email;
-        this.phone = phone1;
-        this.groupId = groupId;
-        this.street = street;
-        this.houseNumber = houseNumber;
-        this.city = city;
-        this.state = state;
-        this.zipCode = zipCode;
-        this.neighborhood = neighborhood;
-        this.batism = batism;
-        this.civilStatus = civilStatus;
-        //this.spouse = spouse;
-        this.children = children;
-        this.role = role;
-        this.isActive = isActive;
-        this.isImageAuthorized = isImageAuthorized;
-        this.createdAt = createdAt1;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -228,5 +208,27 @@ public class Member extends User {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Member toEntity() {
+        Member entity = new Member();
+        entity.setName(name);
+        entity.setBirthdate(birthdate);
+        entity.setCpf(cpf);
+        entity.setEmail(email);
+        entity.setPhone(phone);
+        entity.setGroupId(groupId);
+        entity.setStreet(street);
+        entity.setHouseNumber(houseNumber);
+        entity.setCity(city);
+        entity.setState(state);
+        entity.setZipCode(zipCode);
+        entity.setNeighborhood(neighborhood);
+        entity.setBatism(batism);
+        entity.setCivilStatus(civilStatus);
+        entity.setChildren(children);
+        entity.setRole(role);
+        entity.setCreatedAt(createdAt);
+        return entity;
     }
 }
