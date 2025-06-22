@@ -3,10 +3,7 @@ package user.child;
 import batism.Batism;
 import enums.AgeGroup;
 import enums.ChildRole;
-import enums.CivilStatus;
-import enums.Role;
 import user.User;
-import user.member.MemberSummary;
 
 import java.time.LocalDateTime;
 import java.util.Date;
