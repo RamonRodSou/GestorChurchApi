@@ -1,11 +1,11 @@
-package user.member;
+package br.com.technosou.gestor.user.member;
 
-import batism.Batism;
-import enums.CivilStatus;
-import enums.Role;
+import br.com.technosou.gestor.batism.Batism;
+import br.com.technosou.gestor.enums.CivilStatus;
+import br.com.technosou.gestor.enums.Role;
 import jakarta.persistence.*;
-import user.User;
-import user.child.ChildSummary;
+import br.com.technosou.gestor.user.User;
+import br.com.technosou.gestor.user.child.Child;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -32,12 +32,16 @@ public class Member extends User {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Batism batism;
+
     private CivilStatus civilStatus;
 
-    //private MemberSummary spouse;
+//    @OneToOne
+//    @JoinColumn(name = "spouse_id")
+//    private Member spouse;
 
-//    @OneToMany(mappedBy = "child", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ChildSummary> children;
+    @ManyToMany(mappedBy = "parents")
+    private List<Child> children;
+
     private Role role;
     private  boolean isActive = true;
     private boolean isImageAuthorized = true;
@@ -45,7 +49,7 @@ public class Member extends User {
 
     public Member() { }
 
-    public Member(Long id, String name, String phone, String password, LocalDateTime createdAt, Long id1, String name1, Date birthdate, String cpf, String email, String phone1, String groupId, String street, String houseNumber, String city, String state, String zipCode, String neighborhood, Batism batism, CivilStatus civilStatus, List<ChildSummary> children, Role role, boolean isActive, boolean isImageAuthorized, LocalDateTime createdAt1) {
+    public Member(Long id, String name, String phone, String password, LocalDateTime createdAt, Long id1, String name1, Date birthdate, String cpf, String email, String phone1, String groupId, String street, String houseNumber, String city, String state, String zipCode, String neighborhood, Batism batism, CivilStatus civilStatus, List<Child> children, Role role, boolean isActive, boolean isImageAuthorized, LocalDateTime createdAt1) {
         super(id, name, phone, password, createdAt);
         this.id = id1;
         this.name = name1;
@@ -62,7 +66,7 @@ public class Member extends User {
         this.neighborhood = neighborhood;
         this.batism = batism;
         this.civilStatus = civilStatus;
-        //this.spouse = spouse;
+//        this.spouse = spouse;
         this.children = children;
         this.role = role;
         this.isActive = isActive;
@@ -190,11 +194,11 @@ public class Member extends User {
         this.civilStatus = civilStatus;
     }
 
-    public List<ChildSummary> getChildren() {
+    public List<Child> getChildren() {
         return children;
     }
 
-    public void setChildren(List<ChildSummary> children) {
+    public void setChildren(List<Child> children) {
         this.children = children;
     }
 

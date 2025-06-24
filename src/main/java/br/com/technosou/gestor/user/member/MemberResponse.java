@@ -1,9 +1,10 @@
-package user.member;
+package br.com.technosou.gestor.user.member;
 
-import batism.Batism;
-import enums.CivilStatus;
-import enums.Role;
-import user.child.ChildSummary;
+import br.com.technosou.gestor.batism.Batism;
+import br.com.technosou.gestor.enums.CivilStatus;
+import br.com.technosou.gestor.enums.Role;
+import br.com.technosou.gestor.user.child.ChildSummary;
+
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +24,7 @@ public class MemberResponse {
     private String neighborhood;
     private Batism batism;
     private CivilStatus civilStatus;
-    //private MemberSummary spouse;
+//    private Long spouseId;
     private List<ChildSummary> children;
     private Role role;
     private boolean isActive = true;
@@ -38,9 +39,9 @@ public class MemberResponse {
         return role;
     }
 
-    public List<ChildSummary> getChildren() {
-        return children;
-    }
+//    public List<ChildSummary> getChildren() {
+//        return children;
+//    }
 
     public CivilStatus getCivilStatus() {
         return civilStatus;
@@ -154,6 +155,20 @@ public class MemberResponse {
         this.civilStatus = civilStatus;
     }
 
+//    public Long getSpouseId() {
+//        return spouseId;
+//    }
+//
+//    public void setSpouseId(Long spouseId) {
+//        this.spouseId = spouseId;
+//    }
+//
+
+
+    public List<ChildSummary> getChildren() {
+        return children;
+    }
+
     public void setChildren(List<ChildSummary> children) {
         this.children = children;
     }
@@ -174,7 +189,7 @@ public class MemberResponse {
         this.createdAt = createdAt;
     }
 
-    public MemberRequest toDto() {
+    public MemberRequest toRequest() {
         MemberRequest dto = new MemberRequest();
         dto.setName(getName());
         dto.setBirthdate(getBirthdate());
@@ -196,7 +211,7 @@ public class MemberResponse {
         return dto;
     }
 
-    public MemberRequest toSummaryDTO() {
+    public MemberRequest toRequestSummary() {
         MemberRequest dto = new MemberRequest();
         dto.setName(getName());
         dto.setEmail(getEmail());

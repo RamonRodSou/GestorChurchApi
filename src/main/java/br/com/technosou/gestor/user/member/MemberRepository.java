@@ -1,4 +1,4 @@
-package user.member;
+package br.com.technosou.gestor.user.member;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

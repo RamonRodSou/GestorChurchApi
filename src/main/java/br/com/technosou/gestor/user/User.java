@@ -1,4 +1,4 @@
-package user;
+package br.com.technosou.gestor.user;
 
 import java.time.LocalDateTime;
 

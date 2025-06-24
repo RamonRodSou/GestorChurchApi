@@ -1,12 +1,12 @@
-package user.member;
+package br.com.technosou.gestor.user.member;
 
-import batism.Batism;
-import enums.CivilStatus;
-import enums.Role;
+import br.com.technosou.gestor.batism.Batism;
+import br.com.technosou.gestor.enums.CivilStatus;
+import br.com.technosou.gestor.enums.Role;
+import br.com.technosou.gestor.user.child.ChildSummary;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import user.child.ChildSummary;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -16,42 +16,25 @@ public class MemberRequest {
 
     private String name;
 
-    @NotBlank
     private Date birthdate;
 
     @NotEmpty
     @Size(min = 11, max = 11)
     private String cpf;
-
-    @NotBlank
     private String email;
-
-    @NotBlank
     private String phone;
     private String groupId;
-
-    @NotBlank
     private String street;
-
-    @NotBlank
     private String houseNumber;
-
-    @NotBlank
     private String city;
-
-    @NotEmpty
     @Size(min = 2, max = 3)
     private String state;
-
-    @NotBlank
     private String zipCode;
-
-    @NotBlank
     private String neighborhood;
     private Batism batism;
 
     private CivilStatus civilStatus;
-    //private MemberSummary spouse;
+//    private MemberSummary spouse;
     private List<ChildSummary> children;
     private Role role;
     private  boolean isActive = true;
@@ -170,6 +153,14 @@ public class MemberRequest {
         this.civilStatus = civilStatus;
     }
 
+//    public MemberSummary getSpouse() {
+//        return spouse;
+//    }
+//
+//    public void setSpouse(MemberSummary spouse) {
+//        this.spouse = spouse;
+//    }
+
     public List<ChildSummary> getChildren() {
         return children;
     }
@@ -226,7 +217,7 @@ public class MemberRequest {
         entity.setNeighborhood(neighborhood);
         entity.setBatism(batism);
         entity.setCivilStatus(civilStatus);
-        entity.setChildren(children);
+//        entity.setChildren(children);
         entity.setRole(role);
         entity.setCreatedAt(createdAt);
         return entity;
