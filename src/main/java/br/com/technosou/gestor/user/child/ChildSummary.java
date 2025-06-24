@@ -1,4 +1,4 @@
-package user.child;
+package br.com.technosou.gestor.user.child;
 
 public class ChildSummary {
     private Long id;
