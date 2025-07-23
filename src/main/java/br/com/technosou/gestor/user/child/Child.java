@@ -45,146 +45,21 @@ public class Child extends User {
     private LocalDateTime createdAt = LocalDateTime.now();
     private String password;
 
-    public Batism getBatism() {
-        return batism;
+    public Child() {
+        super();
     }
 
-    public void setBatism(Batism batism) {
-        this.batism = batism;
+    public Child(Long id, String name, String phone, String password, LocalDateTime createdAt, Long id1) {
+        super(id, name, phone, password, createdAt);
+        this.id = id1;
     }
 
-    public Child() { }
+    public Long getId() {
+        return id;
+    }
 
-    public Child(Long id, String name, Date birthdate, String email, String phone, String groupId, Batism batism, List<Member> parents, ChildRole role, AgeGroup ageGroup, String medication, String specialNeed, String allergy, boolean isImageAuthorized, boolean isActive, LocalDateTime createdAt, String password) {
+    public void setId(Long id) {
         this.id = id;
-        this.name = name;
-        this.birthdate = birthdate;
-        this.email = email;
-        this.phone = phone;
-        this.groupId = groupId;
-        this.batism = batism;
-        this.parents = parents;
-        this.role = role;
-        this.ageGroup = ageGroup;
-        this.medication = medication;
-        this.specialNeed = specialNeed;
-        this.allergy = allergy;
-        this.isImageAuthorized = isImageAuthorized;
-        this.isActive = isActive;
-        this.createdAt = createdAt;
-        this.password = password;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
-    public boolean isImageAuthorized() {
-        return isImageAuthorized;
-    }
-
-    public void setImageAuthorized(boolean imageAuthorized) {
-        isImageAuthorized = imageAuthorized;
-    }
-
-    public String getAllergy() {
-        return allergy;
-    }
-
-    public void setAllergy(String allergy) {
-        this.allergy = allergy;
-    }
-
-    public String getSpecialNeed() {
-        return specialNeed;
-    }
-
-    public void setSpecialNeed(String specialNeed) {
-        this.specialNeed = specialNeed;
-    }
-
-    public String getMedication() {
-        return medication;
-    }
-
-    public void setMedication(String medication) {
-        this.medication = medication;
-    }
-
-    public AgeGroup getAgeGroup() {
-        return ageGroup;
-    }
-
-    public void setAgeGroup(AgeGroup ageGroup) {
-        this.ageGroup = ageGroup;
-    }
-
-    public ChildRole getRole() {
-        return role;
-    }
-
-    public void setRole(ChildRole role) {
-        this.role = role;
-    }
-
-    public List<Member> getParents() {
-        return parents;
-    }
-
-    public void setParents(List<Member> parents) {
-        this.parents = parents;
-    }
-
-    public String getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Date getBirthdate() {
-        return birthdate;
-    }
-
-    public void setBirthdate(Date birthdate) {
-        this.birthdate = birthdate;
     }
 
     public String getName() {
@@ -195,11 +70,123 @@ public class Child extends User {
         this.name = name;
     }
 
-    public Long getId() {
-        return id;
+    public Date getBirthdate() {
+        return birthdate;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
+    public Batism getBatism() {
+        return batism;
+    }
+
+    public void setBatism(Batism batism) {
+        this.batism = batism;
+    }
+
+    public List<Member> getParents() {
+        return parents;
+    }
+
+    public void setParents(List<Member> parents) {
+        this.parents = parents;
+    }
+
+    public ChildRole getRole() {
+        return role;
+    }
+
+    public void setRole(ChildRole role) {
+        this.role = role;
+    }
+
+    public AgeGroup getAgeGroup() {
+        return ageGroup;
+    }
+
+    public void setAgeGroup(AgeGroup ageGroup) {
+        this.ageGroup = ageGroup;
+    }
+
+    public String getMedication() {
+        return medication;
+    }
+
+    public void setMedication(String medication) {
+        this.medication = medication;
+    }
+
+    public String getSpecialNeed() {
+        return specialNeed;
+    }
+
+    public void setSpecialNeed(String specialNeed) {
+        this.specialNeed = specialNeed;
+    }
+
+    public String getAllergy() {
+        return allergy;
+    }
+
+    public void setAllergy(String allergy) {
+        this.allergy = allergy;
+    }
+
+    public boolean isImageAuthorized() {
+        return isImageAuthorized;
+    }
+
+    public void setImageAuthorized(boolean imageAuthorized) {
+        isImageAuthorized = imageAuthorized;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

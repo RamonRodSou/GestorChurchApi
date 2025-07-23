@@ -3,7 +3,7 @@ package br.com.technosou.gestor.user.member;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import br.com.technosou.gestor.user.child.Child;
-import br.com.technosou.gestor.user.child.ChildSummary;
+import br.com.technosou.gestor.user.child.ChildSummaryDTO;
 
 import java.util.List;
 
@@ -16,8 +16,8 @@ public interface MapperMember {
 
     Member toEntity(MemberRequest request);
 
-    ChildSummary toChildSummary(Child child);
+    ChildSummaryDTO toChildSummary(Child child);
 
-    List<ChildSummary> toChildSummaryList(List<Child> childList);
+    List<ChildSummaryDTO> toChildSummaryList(List<Child> childList);
 
 }

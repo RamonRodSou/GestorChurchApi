@@ -4,7 +4,7 @@ import br.com.technosou.gestor.batism.Batism;
 import br.com.technosou.gestor.enums.CivilStatus;
 import br.com.technosou.gestor.enums.Role;
 import br.com.technosou.gestor.user.child.Child;
-import br.com.technosou.gestor.user.child.ChildSummary;
+import br.com.technosou.gestor.user.child.ChildSummaryDTO;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
@@ -34,7 +34,7 @@ public class MemberRequest {
 
     private CivilStatus civilStatus;
     private MemberSummaryDTO spouse;
-    private List<ChildSummary> children;
+    private List<ChildSummaryDTO> children;
     private Role role;
     private  boolean isActive = true;
     private boolean isImageAuthorized = true;
@@ -160,11 +160,11 @@ public class MemberRequest {
         this.spouse = spouse;
     }
 
-    public List<ChildSummary> getChildren() {
+    public List<ChildSummaryDTO> getChildren() {
         return children;
     }
 
-    public void setChildren(List<ChildSummary> children) {
+    public void setChildren(List<ChildSummaryDTO> children) {
         this.children = children;
     }
 
@@ -238,11 +238,11 @@ public class MemberRequest {
     private List<Child> toChild() {
         if(children == null) return null;
         return children.stream()
-                .map(childSummary -> {
+                .map(ChildSummaryDTO -> {
                     Child child = new Child();
-                    child.setId(childSummary.getId());
-                    child.setName(childSummary.getName());
-                    child.setPhone(childSummary.getPhone());
+                    child.setId(ChildSummaryDTO.getId());
+                    child.setName(ChildSummaryDTO.getName());
+                    child.setPhone(ChildSummaryDTO.getPhone());
                     return child;
                 })
                 .toList();

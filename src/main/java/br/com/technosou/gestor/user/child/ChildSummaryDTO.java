@@ -1,13 +1,13 @@
 package br.com.technosou.gestor.user.child;
 
-public class ChildSummary {
+public class ChildSummaryDTO {
     private Long id;
     private String name;
     private String phone;
 
-    public ChildSummary() { }
+    public ChildSummaryDTO() { }
 
-    public ChildSummary(Long id, String name, String phone) {
+    public ChildSummaryDTO(Long id, String name, String phone) {
         this.id = id;
         this.name = name;
         this.phone = phone;

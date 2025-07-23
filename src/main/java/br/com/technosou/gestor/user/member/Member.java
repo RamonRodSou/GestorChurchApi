@@ -45,15 +45,23 @@ public class Member extends User {
     private List<Child> children;
 
     private Role role;
-    private  boolean isActive = true;
+    private boolean isActive = true;
     private boolean isImageAuthorized = true;
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    public Member() { }
+    public Member() {
+        super();
+    }
 
-    public Member(Long id, String name, String phone, String password, LocalDateTime createdAt, Long id1, String name1, Date birthdate, String cpf, String email, String phone1, String groupId, String street, String houseNumber, String city, String state, String zipCode, String neighborhood, Batism batism, CivilStatus civilStatus, List<Child> children, Role role, boolean isActive, boolean isImageAuthorized, LocalDateTime createdAt1) {
+    public Member(Long id, String name, String email) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    }
+
+    public Member(Long id, String name, String phone, String password, LocalDateTime createdAt, Long id1, String name1, Date birthdate, String cpf, String email, String phone1, String groupId, String street, String houseNumber, String city, String state, String zipCode, String neighborhood, Batism batism, CivilStatus civilStatus, Member spouse, List<Child> children, Role role, boolean isActive, boolean isImageAuthorized, LocalDateTime createdAt1) {
         super(id, name, phone, password, createdAt);
-        this.id = id1;
+        this.id = id;
         this.name = name1;
         this.birthdate = birthdate;
         this.cpf = cpf;
@@ -74,9 +82,6 @@ public class Member extends User {
         this.isActive = isActive;
         this.isImageAuthorized = isImageAuthorized;
         this.createdAt = createdAt1;
-    }
-
-    public Member(Long id, String name, String email) {
     }
 
     public Long getId() {
@@ -247,3 +252,4 @@ public class Member extends User {
         this.createdAt = createdAt;
     }
 }
+

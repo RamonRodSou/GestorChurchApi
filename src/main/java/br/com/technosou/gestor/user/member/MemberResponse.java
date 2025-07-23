@@ -3,7 +3,7 @@ package br.com.technosou.gestor.user.member;
 import br.com.technosou.gestor.batism.Batism;
 import br.com.technosou.gestor.enums.CivilStatus;
 import br.com.technosou.gestor.enums.Role;
-import br.com.technosou.gestor.user.child.ChildSummary;
+import br.com.technosou.gestor.user.child.ChildSummaryDTO;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -25,7 +25,7 @@ public class MemberResponse {
     private Batism batism;
     private CivilStatus civilStatus;
     private MemberSummaryDTO spouseId;
-    private List<ChildSummary> children;
+    private List<ChildSummaryDTO> children;
     private Role role;
     private boolean isActive = true;
     private boolean isImageAuthorized = true;
@@ -155,11 +155,11 @@ public class MemberResponse {
         this.spouseId = spouseId;
     }
 
-    public List<ChildSummary> getChildren() {
+    public List<ChildSummaryDTO> getChildren() {
         return children;
     }
 
-    public void setChildren(List<ChildSummary> children) {
+    public void setChildren(List<ChildSummaryDTO> children) {
         this.children = children;
     }
 
