@@ -3,8 +3,8 @@ package br.com.technosou.gestor.user.member;
 import br.com.technosou.gestor.batism.Batism;
 import br.com.technosou.gestor.enums.CivilStatus;
 import br.com.technosou.gestor.enums.Role;
+import br.com.technosou.gestor.user.child.Child;
 import br.com.technosou.gestor.user.child.ChildSummary;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
@@ -15,7 +15,6 @@ import java.util.List;
 public class MemberRequest {
 
     private String name;
-
     private Date birthdate;
 
     @NotEmpty
@@ -34,7 +33,7 @@ public class MemberRequest {
     private Batism batism;
 
     private CivilStatus civilStatus;
-//    private MemberSummary spouse;
+    private MemberSummaryDTO spouse;
     private List<ChildSummary> children;
     private Role role;
     private  boolean isActive = true;
@@ -153,13 +152,13 @@ public class MemberRequest {
         this.civilStatus = civilStatus;
     }
 
-//    public MemberSummary getSpouse() {
-//        return spouse;
-//    }
-//
-//    public void setSpouse(MemberSummary spouse) {
-//        this.spouse = spouse;
-//    }
+    public MemberSummaryDTO getSpouse() {
+        return spouse;
+    }
+
+    public void setSpouse(MemberSummaryDTO spouse) {
+        this.spouse = spouse;
+    }
 
     public List<ChildSummary> getChildren() {
         return children;
@@ -217,9 +216,37 @@ public class MemberRequest {
         entity.setNeighborhood(neighborhood);
         entity.setBatism(batism);
         entity.setCivilStatus(civilStatus);
-//        entity.setChildren(children);
+        entity.setSpouse(toSpouse());
+        entity.setChildren(toChild());
         entity.setRole(role);
         entity.setCreatedAt(createdAt);
         return entity;
     }
+
+    private Member toSpouse() {
+        if (spouse != null) {
+            Member member = new Member(
+                    spouse.getId(),
+                    spouse.getName(),
+                    spouse.getEmail()
+            );
+            return member;
+        }
+        return null;
+    }
+
+    private List<Child> toChild() {
+        if(children == null) return null;
+        return children.stream()
+                .map(childSummary -> {
+                    Child child = new Child();
+                    child.setId(childSummary.getId());
+                    child.setName(childSummary.getName());
+                    child.setPhone(childSummary.getPhone());
+                    return child;
+                })
+                .toList();
+    }
+
 }
+

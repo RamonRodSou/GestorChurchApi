@@ -3,6 +3,7 @@ package br.com.technosou.gestor.user.member;
 import br.com.technosou.gestor.batism.Batism;
 import br.com.technosou.gestor.enums.CivilStatus;
 import br.com.technosou.gestor.enums.Role;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import br.com.technosou.gestor.user.User;
 import br.com.technosou.gestor.user.child.Child;
@@ -35,10 +36,11 @@ public class Member extends User {
 
     private CivilStatus civilStatus;
 
-//    @OneToOne
-//    @JoinColumn(name = "spouse_id")
-//    private Member spouse;
+    @OneToOne
+    @JoinColumn(name = "spouse_id")
+    private Member spouse;
 
+    @JsonManagedReference
     @ManyToMany(mappedBy = "parents")
     private List<Child> children;
 
@@ -66,12 +68,15 @@ public class Member extends User {
         this.neighborhood = neighborhood;
         this.batism = batism;
         this.civilStatus = civilStatus;
-//        this.spouse = spouse;
+        this.spouse = spouse;
         this.children = children;
         this.role = role;
         this.isActive = isActive;
         this.isImageAuthorized = isImageAuthorized;
         this.createdAt = createdAt1;
+    }
+
+    public Member(Long id, String name, String email) {
     }
 
     public Long getId() {
@@ -192,6 +197,14 @@ public class Member extends User {
 
     public void setCivilStatus(CivilStatus civilStatus) {
         this.civilStatus = civilStatus;
+    }
+
+    public Member getSpouse() {
+        return spouse;
+    }
+
+    public void setSpouse(Member spouse) {
+        this.spouse = spouse;
     }
 
     public List<Child> getChildren() {
