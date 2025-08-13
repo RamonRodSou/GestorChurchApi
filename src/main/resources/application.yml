@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: gestor_db
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST}:3306/gestor_db?useTimezone=true&serverTimezone=UTC
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+    show-sql: false
+    open-in-view: false
+logging:
+  level:
+    root: WARN

@@ -1,16 +1,16 @@
-package br.com.technosou.gestor.user.member;
+package br.com.technosou.gestor.member.child;
 
-public class MemberSummaryDTO {
+public class ChildSummaryDTO {
     private Long id;
     private String name;
-    private String email;
+    private String phone;
 
-    public MemberSummaryDTO() {}
+    public ChildSummaryDTO() { }
 
-    public MemberSummaryDTO(Long id, String name, String email) {
+    public ChildSummaryDTO(Long id, String name, String phone) {
         this.id = id;
         this.name = name;
-        this.email = email;
+        this.phone = phone;
     }
 
     public Long getId() {
@@ -29,11 +29,11 @@ public class MemberSummaryDTO {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

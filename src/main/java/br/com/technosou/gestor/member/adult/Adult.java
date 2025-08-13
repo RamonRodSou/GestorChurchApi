@@ -1,78 +1,81 @@
-package br.com.technosou.gestor.user.member;
+package br.com.technosou.gestor.member.adult;
 
 import br.com.technosou.gestor.batism.Batism;
 import br.com.technosou.gestor.enums.CivilStatus;
 import br.com.technosou.gestor.enums.Role;
+import br.com.technosou.gestor.member.Member;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import br.com.technosou.gestor.user.User;
-import br.com.technosou.gestor.user.child.Child;
+import br.com.technosou.gestor.member.child.Child;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Member extends User {
+@Table(name = "adults")
+public class Adult extends Member implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
-    private Date birthdate;
+    private static final long serialVersionUID = 1L;
+
+    @Column(nullable = false, length = 11)
     private String cpf;
-    private String email;
-    private String phone;
+
     private String groupId;
-    private String street;
-    private String houseNumber;
-    private String city;
-    private String state;
+
+    @Column(nullable = false, length = 500)
     private String zipCode;
+
+    @Column(nullable = false, length = 100)
+    private String street;
+
+    @Column(nullable = false, length = 50)
+    private String houseNumber;
+
+    @Column(nullable = false, length = 100)
+    private String city;
+
+    @Column(nullable = false, length = 100)
+    private String state;
+
+    @Column(nullable = false, length = 100)
     private String neighborhood;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Batism batism;
 
+    @Column(nullable = false, length = 100)
     private CivilStatus civilStatus;
 
     @OneToOne
     @JoinColumn(name = "spouse_id")
-    private Member spouse;
+    private Adult spouse;
 
     @JsonManagedReference
     @ManyToMany(mappedBy = "parents")
     private List<Child> children;
 
+    @Column(nullable = false)
     private Role role;
+
     private boolean isActive = true;
     private boolean isImageAuthorized = true;
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    public Member() {
+    public Adult() {
         super();
     }
 
-    public Member(Long id, String name, String email) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-    }
-
-    public Member(Long id, String name, String phone, String password, LocalDateTime createdAt, Long id1, String name1, Date birthdate, String cpf, String email, String phone1, String groupId, String street, String houseNumber, String city, String state, String zipCode, String neighborhood, Batism batism, CivilStatus civilStatus, Member spouse, List<Child> children, Role role, boolean isActive, boolean isImageAuthorized, LocalDateTime createdAt1) {
-        super(id, name, phone, password, createdAt);
-        this.id = id;
-        this.name = name1;
-        this.birthdate = birthdate;
+    public Adult(Long id, String firstName, String lastName, Date birthdate, String gender, String email, String phone, String groupId, String cpf, String groupId1, String zipCode, String street, String houseNumber, String city, String state, String neighborhood, Batism batism, CivilStatus civilStatus, Adult spouse, List<Child> children, Role role, boolean isActive, boolean isImageAuthorized, LocalDateTime createdAt) {
+        super(id, firstName, lastName, birthdate, gender, email, phone, groupId);
         this.cpf = cpf;
-        this.email = email;
-        this.phone = phone1;
-        this.groupId = groupId;
+        this.groupId = groupId1;
+        this.zipCode = zipCode;
         this.street = street;
         this.houseNumber = houseNumber;
         this.city = city;
         this.state = state;
-        this.zipCode = zipCode;
         this.neighborhood = neighborhood;
         this.batism = batism;
         this.civilStatus = civilStatus;
@@ -81,31 +84,7 @@ public class Member extends User {
         this.role = role;
         this.isActive = isActive;
         this.isImageAuthorized = isImageAuthorized;
-        this.createdAt = createdAt1;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Date getBirthdate() {
-        return birthdate;
-    }
-
-    public void setBirthdate(Date birthdate) {
-        this.birthdate = birthdate;
+        this.createdAt = createdAt;
     }
 
     public String getCpf() {
@@ -116,28 +95,22 @@ public class Member extends User {
         this.cpf = cpf;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
+    @Override
     public String getGroupId() {
         return groupId;
     }
 
+    @Override
     public void setGroupId(String groupId) {
         this.groupId = groupId;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 
     public String getStreet() {
@@ -172,14 +145,6 @@ public class Member extends User {
         this.state = state;
     }
 
-    public String getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
-
     public String getNeighborhood() {
         return neighborhood;
     }
@@ -204,11 +169,11 @@ public class Member extends User {
         this.civilStatus = civilStatus;
     }
 
-    public Member getSpouse() {
+    public Adult getSpouse() {
         return spouse;
     }
 
-    public void setSpouse(Member spouse) {
+    public void setSpouse(Adult spouse) {
         this.spouse = spouse;
     }
 
@@ -250,6 +215,33 @@ public class Member extends User {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public static Adult AdultUpdate(AdultDTO dto, Adult entity) {
+        entity.setFirstName(dto.getFirstName());
+        entity.setLastName(dto.getLastName());
+        entity.setBirthdate(dto.getBirthdate());
+        entity.setGender(dto.getGender());
+        entity.setCpf(dto.getCpf());
+        entity.setEmail(dto.getEmail());
+        entity.setPhone(dto.getPhone());
+        entity.setGroupId(dto.getGroupId());
+        entity.setZipCode(dto.getZipCode());
+        entity.setStreet(dto.getStreet());
+        entity.setHouseNumber(dto.getHouseNumber());
+        entity.setCity(dto.getCity());
+        entity.setState(dto.getState());
+        entity.setNeighborhood(dto.getNeighborhood());
+        entity.setBatism(dto.getBatism());
+        entity.setCivilStatus(dto.getCivilStatus());
+        entity.setSpouse(dto.getSpouse());
+        entity.setChildren(dto.getChildren());
+        entity.setRole(dto.getRole());
+        entity.setSpouse(dto.getSpouse());
+        entity.setImageAuthorized(dto.isImageAuthorized());
+        entity.setActive(dto.isActive());
+        entity.setCreatedAt(dto.getCreatedAt());
+        return entity;
     }
 }
 

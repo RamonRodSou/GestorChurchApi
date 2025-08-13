@@ -1,0 +1,21 @@
+CREATE TABLE child (
+       id BIGINT AUTO_INCREMENT PRIMARY KEY,
+       first_name VARCHAR(100) NOT NULL,
+       last_name VARCHAR(100) NOT NULL,
+       birthdate DATE,
+       gender VARCHAR(6) NOT NULL,
+       email VARCHAR(255),
+       phone VARCHAR(255),
+       group_id VARCHAR(255),
+       batism_id BIGINT,
+       role VARCHAR(50),
+       age_group VARCHAR(50),
+       medication VARCHAR(255),
+       special_need VARCHAR(255),
+       allergy VARCHAR(255),
+       is_image_authorized BOOLEAN DEFAULT TRUE,
+       is_active BOOLEAN DEFAULT TRUE,
+       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+       password VARCHAR(255),
+       CONSTRAINT fk_child_batism FOREIGN KEY (batism_id) REFERENCES batism(id)
+);
