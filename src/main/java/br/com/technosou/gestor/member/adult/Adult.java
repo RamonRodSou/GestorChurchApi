@@ -42,7 +42,7 @@ public class Adult extends Member implements Serializable {
     @Column(nullable = false, length = 100)
     private String neighborhood;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @Embedded
     private Batism batism;
 
     @Column(nullable = false, length = 100)

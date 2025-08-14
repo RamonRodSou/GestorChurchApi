@@ -3,12 +3,12 @@ package br.com.technosou.gestor.member.adult;
 
 import br.com.technosou.gestor.exception.RequiredObjectIsNullException;
 import br.com.technosou.gestor.exception.ResourceNotFoundException;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
-import java.util.logging.Logger;
 
 import static br.com.technosou.gestor.mapper.ObjectMapper.parseListObjects;
 import static br.com.technosou.gestor.mapper.ObjectMapper.parseObject;
@@ -22,7 +22,7 @@ public class AdultService {
     @Autowired
     private AdultRepository repository;
 
-    private Logger logger = (Logger) LoggerFactory.getLogger(AdultService.class.getName());
+    private Logger logger = LoggerFactory.getLogger(AdultService.class.getName());
 
     public List<AdultDTO> findAll() {
 

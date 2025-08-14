@@ -8,6 +8,7 @@ import br.com.technosou.gestor.member.child.Child;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import jakarta.persistence.Embedded;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlRootElement;
@@ -67,6 +68,7 @@ public class AdultDTO extends RepresentationModel<AdultDTO> implements Serializa
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String neighborhood;
 
+    @Embedded
     private Batism batism;
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/Adults/v1")
+@RequestMapping("api/adults/v1")
 public class AdultController {
 
     @Autowired
