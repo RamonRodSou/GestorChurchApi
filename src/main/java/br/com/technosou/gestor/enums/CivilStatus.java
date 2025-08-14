@@ -2,7 +2,7 @@ package br.com.technosou.gestor.enums;
 
 public enum CivilStatus {
     SINGLE,
-    MARRIEd,
+    MARRIED,
     WIDOWED,
     DIVORCED
 }

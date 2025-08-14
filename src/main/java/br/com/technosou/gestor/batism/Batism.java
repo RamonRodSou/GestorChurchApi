@@ -8,15 +8,14 @@ import java.util.Date;
 public class Batism {
 
     private String churchName;
-    private boolean ourChurch = true;
     public String leaderName;
     public Date baptismDate;
 
     public Batism() { }
 
-    public Batism(String churchName, boolean ourChurch, String leaderName, Date baptismDate) {
+    public Batism(String churchName, String leaderName, Date baptismDate) {
         this.churchName = churchName;
-        this.ourChurch = ourChurch;
+
         this.leaderName = leaderName;
         this.baptismDate = baptismDate;
     }
@@ -27,14 +26,6 @@ public class Batism {
 
     public void setChurchName(String churchName) {
         this.churchName = churchName;
-    }
-
-    public boolean isOurChurch() {
-        return ourChurch;
-    }
-
-    public void setOurChurch(boolean ourChurch) {
-        this.ourChurch = ourChurch;
     }
 
     public String getLeaderName() {

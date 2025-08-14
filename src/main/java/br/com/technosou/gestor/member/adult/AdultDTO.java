@@ -74,9 +74,9 @@ public class AdultDTO extends RepresentationModel<AdultDTO> implements Serializa
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private CivilStatus civilStatus;
 
-    private Adult spouse;
+    private String spouseId;
 
-    private List<Child> children;
+    private List<Long> childrenIds;
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Role role;
@@ -221,20 +221,20 @@ public class AdultDTO extends RepresentationModel<AdultDTO> implements Serializa
         this.civilStatus = civilStatus;
     }
 
-    public Adult getSpouse() {
-        return spouse;
+    public String getSpouseId() {
+        return spouseId;
     }
 
-    public void setSpouse(Adult spouse) {
-        this.spouse = spouse;
+    public void setSpouseId(String spouseId) {
+        this.spouseId = spouseId;
     }
 
-    public List<Child> getChildren() {
-        return children;
+    public List<Long> getChildrenIds() {
+        return childrenIds;
     }
 
-    public void setChildren(List<Child> children) {
-        this.children = children;
+    public void setChildrenIds(List<Long> childrenIds) {
+        this.childrenIds = childrenIds;
     }
 
     public Role getRole() {
@@ -269,16 +269,6 @@ public class AdultDTO extends RepresentationModel<AdultDTO> implements Serializa
         this.createdAt = createdAt;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        AdultDTO AdultDTO = (AdultDTO) o;
-        return isActive == AdultDTO.isActive && isImageAuthorized == AdultDTO.isImageAuthorized && Objects.equals(id, AdultDTO.id) && Objects.equals(firstName, AdultDTO.firstName) && Objects.equals(lastName, AdultDTO.lastName) && Objects.equals(gender, AdultDTO.gender) && Objects.equals(birthdate, AdultDTO.birthdate) && Objects.equals(cpf, AdultDTO.cpf) && Objects.equals(email, AdultDTO.email) && Objects.equals(phone, AdultDTO.phone) && Objects.equals(groupId, AdultDTO.groupId) && Objects.equals(zipCode, AdultDTO.zipCode) && Objects.equals(street, AdultDTO.street) && Objects.equals(houseNumber, AdultDTO.houseNumber) && Objects.equals(city, AdultDTO.city) && Objects.equals(state, AdultDTO.state) && Objects.equals(neighborhood, AdultDTO.neighborhood) && Objects.equals(batism, AdultDTO.batism) && civilStatus == AdultDTO.civilStatus && Objects.equals(spouse, AdultDTO.spouse) && Objects.equals(children, AdultDTO.children) && role == AdultDTO.role && Objects.equals(createdAt, AdultDTO.createdAt);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, lastName, gender, birthdate, cpf, email, phone, groupId, zipCode, street, houseNumber, city, state, neighborhood, batism, civilStatus, spouse, children, role, isActive, isImageAuthorized, createdAt);
-    }
 
 }

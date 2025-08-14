@@ -45,17 +45,18 @@ public class Adult extends Member implements Serializable {
     @Embedded
     private Batism batism;
 
-    @Column(nullable = false, length = 100)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "civil_status", nullable = false)
     private CivilStatus civilStatus;
 
-    @OneToOne
-    @JoinColumn(name = "spouse_id")
-    private Adult spouse;
+    @Column(name = "spouse_id", nullable = true, length = 100)
+    private String spouseId;
 
+    @ManyToMany(mappedBy = "parents", fetch = FetchType.EAGER)
     @JsonManagedReference
-    @ManyToMany(mappedBy = "parents")
     private List<Child> children;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
 
@@ -67,7 +68,7 @@ public class Adult extends Member implements Serializable {
         super();
     }
 
-    public Adult(Long id, String firstName, String lastName, Date birthdate, String gender, String email, String phone, String groupId, String cpf, String groupId1, String zipCode, String street, String houseNumber, String city, String state, String neighborhood, Batism batism, CivilStatus civilStatus, Adult spouse, List<Child> children, Role role, boolean isActive, boolean isImageAuthorized, LocalDateTime createdAt) {
+    public Adult(Long id, String firstName, String lastName, Date birthdate, String gender, String email, String phone, String groupId, String cpf, String groupId1, String zipCode, String street, String houseNumber, String city, String state, String neighborhood, Batism batism, CivilStatus civilStatus, String spouseId, List<Child> children, Role role, boolean isActive, boolean isImageAuthorized, LocalDateTime createdAt) {
         super(id, firstName, lastName, birthdate, gender, email, phone, groupId);
         this.cpf = cpf;
         this.groupId = groupId1;
@@ -79,7 +80,7 @@ public class Adult extends Member implements Serializable {
         this.neighborhood = neighborhood;
         this.batism = batism;
         this.civilStatus = civilStatus;
-        this.spouse = spouse;
+        this.spouseId = spouseId;
         this.children = children;
         this.role = role;
         this.isActive = isActive;
@@ -169,13 +170,9 @@ public class Adult extends Member implements Serializable {
         this.civilStatus = civilStatus;
     }
 
-    public Adult getSpouse() {
-        return spouse;
-    }
+    public String getSpouseId() { return spouseId; }
 
-    public void setSpouse(Adult spouse) {
-        this.spouse = spouse;
-    }
+    public void setSpouseId(String spouseId) { this.spouseId = spouseId; }
 
     public List<Child> getChildren() {
         return children;
@@ -234,10 +231,9 @@ public class Adult extends Member implements Serializable {
         entity.setNeighborhood(dto.getNeighborhood());
         entity.setBatism(dto.getBatism());
         entity.setCivilStatus(dto.getCivilStatus());
-        entity.setSpouse(dto.getSpouse());
-        entity.setChildren(dto.getChildren());
+        entity.setSpouseId(dto.getSpouseId());
+//        entity.setChildren(dto.getChildrenIds());
         entity.setRole(dto.getRole());
-        entity.setSpouse(dto.getSpouse());
         entity.setImageAuthorized(dto.isImageAuthorized());
         entity.setActive(dto.isActive());
         entity.setCreatedAt(dto.getCreatedAt());
