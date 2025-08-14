@@ -1,10 +1,12 @@
 package br.com.technosou.gestor.batism;
 
+import jakarta.persistence.Embeddable;
+
 import java.util.Date;
 
+@Embeddable
 public class Batism {
 
-    private long id;
     private String churchName;
     private boolean ourChurch = true;
     public String leaderName;
@@ -17,14 +19,6 @@ public class Batism {
         this.ourChurch = ourChurch;
         this.leaderName = leaderName;
         this.baptismDate = baptismDate;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getChurchName() {
