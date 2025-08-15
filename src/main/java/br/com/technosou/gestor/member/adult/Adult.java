@@ -49,9 +49,6 @@ public class Adult extends Member implements Serializable {
     @Column(name = "civil_status", nullable = false)
     private CivilStatus civilStatus;
 
-//    @Column(name = "spouse_id", nullable = true, length = 100)
-//    private String spouseId;
-
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Adult spouse;
 
@@ -172,11 +169,6 @@ public class Adult extends Member implements Serializable {
     public void setCivilStatus(CivilStatus civilStatus) {
         this.civilStatus = civilStatus;
     }
-
-//    public String getSpouseId() { return spouseId; }
-//
-//    public void setSpouseId(String spouseId) { this.spouseId = spouseId; }
-
 
     public Adult getSpouse() {
         return spouse;
