@@ -15,12 +15,15 @@ CREATE TABLE adults (
         state VARCHAR(2) NOT NULL,
         neighborhood VARCHAR(100),
         civil_status ENUM('SINGLE','MARRIED','WIDOWED','DIVORCED') NOT NULL,
-        spouse_id VARCHAR(50),
+        spouse_id BIGINT,
         role ENUM('STUDENT', 'MEMBER', 'VOLUNTEER', 'LEADER', 'PASTOR') NOT NULL,
         is_active BOOLEAN DEFAULT TRUE,
         is_image_authorized BOOLEAN DEFAULT TRUE,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         church_name VARCHAR(255),
         leader_name VARCHAR(255),
-        baptism_date DATE
+        baptism_date DATE,
+
+        CONSTRAINT fk_spouse FOREIGN KEY (spouse_id) REFERENCES adults(id)
+
 );
