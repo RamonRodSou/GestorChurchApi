@@ -15,7 +15,6 @@ public class Batism {
 
     public Batism(String churchName, String leaderName, Date baptismDate) {
         this.churchName = churchName;
-
         this.leaderName = leaderName;
         this.baptismDate = baptismDate;
     }
