@@ -9,7 +9,6 @@ CREATE TABLE children (
       is_image_authorized BOOLEAN DEFAULT TRUE,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       phone VARCHAR(13),
-      group_id VARCHAR(255),
       child_role ENUM('EMPTY','MEMBER','VOLUNTEER') NOT NULL,
       age_group ENUM('CHILD','TEENAGER','YOUTH') NOT NULL,
       medication VARCHAR(300),
@@ -18,4 +17,5 @@ CREATE TABLE children (
       church_name VARCHAR(255),
       leader_name VARCHAR(255),
       baptism_date DATE
+
 );
