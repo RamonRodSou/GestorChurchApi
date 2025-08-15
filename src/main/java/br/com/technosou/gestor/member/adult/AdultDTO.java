@@ -1,12 +1,10 @@
 package br.com.technosou.gestor.member.adult;
 
-import br.com.technosou.gestor.batism.Batism;
 import br.com.technosou.gestor.batism.BatismDTO;
 import br.com.technosou.gestor.enums.CivilStatus;
 import br.com.technosou.gestor.enums.Role;
 import br.com.technosou.gestor.member.child.ChildSummaryDTO;
 import br.com.technosou.gestor.serializer.GenderSerializer;
-import br.com.technosou.gestor.member.child.Child;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -18,6 +16,7 @@ import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -75,7 +74,7 @@ public class AdultDTO extends RepresentationModel<AdultDTO> implements Serializa
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private CivilStatus civilStatus;
 
-    private String spouseId;
+    private AdultSummaryDTO spouse;
 
     private List<ChildSummaryDTO> children;
 
@@ -86,51 +85,7 @@ public class AdultDTO extends RepresentationModel<AdultDTO> implements Serializa
     private boolean isImageAuthorized = true;
     private LocalDateTime createdAt = LocalDateTime.now();
 
-
-
-    public AdultDTO() {
-    }
-
-    public AdultDTO(br.com.technosou.gestor.member.adult.Adult entity) {
-        this.id = entity.getId();
-        this.firstName = entity.getFirstName();
-        this.lastName = entity.getLastName();
-        this.gender = entity.getGender();
-        this.birthdate = entity.getBirthdate();
-        this.cpf = entity.getCpf();
-        this.email = entity.getEmail();
-        this.phone = entity.getPhone();
-        this.groupId = entity.getGroupId();
-        this.zipCode = entity.getZipCode();
-        this.street = entity.getStreet();
-        this.houseNumber = entity.getHouseNumber();
-        this.city = entity.getCity();
-        this.state = entity.getState();
-        this.neighborhood = entity.getNeighborhood();
-
-        if (entity.getBatism() != null) {
-            this.batism = new BatismDTO(
-                    entity.getBatism().getChurchName(),
-                    entity.getBatism().getLeaderName(),
-                    entity.getBatism().getBaptismDate()
-            );
-        }
-
-        this.civilStatus = entity.getCivilStatus();
-        // this.spouseId = entity.getSpouse() != null ? entity.getSpouse().getId().toString() : null; // Se spouseId vem de Adult
-        this.role = entity.getRole();
-        this.isActive = entity.isActive();
-        this.isImageAuthorized = entity.isImageAuthorized();
-        this.createdAt = entity.getCreatedAt();
-        /*
-        if (entity.getChildren() != null) {
-            this.children = entity.getChildren().stream()
-                .map(childEntity -> new ChildSummaryDTO(childEntity)) // Assumindo construtor em ChildSummaryDTO
-                .collect(Collectors.toList());
-        }
-        */
-
-    }
+    public AdultDTO() {}
 
     public Long getId() {
         return id;
@@ -268,12 +223,21 @@ public class AdultDTO extends RepresentationModel<AdultDTO> implements Serializa
         this.civilStatus = civilStatus;
     }
 
-    public String getSpouseId() {
-        return spouseId;
+//    public String getSpouseId() {
+//        return spouseId;
+//    }
+//
+//    public void setSpouseId(String spouseId) {
+//        this.spouseId = spouseId;
+//    }
+
+
+    public AdultSummaryDTO getSpouse() {
+        return spouse;
     }
 
-    public void setSpouseId(String spouseId) {
-        this.spouseId = spouseId;
+    public void setSpouse(AdultSummaryDTO spouse) {
+        this.spouse = spouse;
     }
 
     public List<ChildSummaryDTO> getChildren() {

@@ -44,8 +44,8 @@ public class AdultService {
         var entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id " + id + " No records found!"));
 
         var dto = parseObject(entity, AdultDTO.class);
-        List<ChildSummaryDTO> children = repository.findChildrenByAdultId(id);
-        dto.setChildren(children);
+//        List<ChildSummaryDTO> children = repository.findChildrenByAdultId(id);
+//        dto.setChildren(children);
 
         addHateoasLinks(dto);
         return dto;
