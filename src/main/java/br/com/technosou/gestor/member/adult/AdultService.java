@@ -4,6 +4,8 @@ package br.com.technosou.gestor.member.adult;
 import br.com.technosou.gestor.exception.RequiredObjectIsNullException;
 import br.com.technosou.gestor.exception.ResourceNotFoundException;
 
+import br.com.technosou.gestor.member.child.ChildSummaryDTO;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
@@ -34,12 +36,16 @@ public class AdultService {
         return entities;
     }
 
+    @Transactional
     public AdultDTO findById(Long id) {
 
         logger.info("Find Adult by id: " + id);
 
         var entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id " + id + " No records found!"));
+
         var dto = parseObject(entity, AdultDTO.class);
+        List<ChildSummaryDTO> children = repository.findChildrenByAdultId(id);
+        dto.setChildren(children);
 
         addHateoasLinks(dto);
         return dto;
