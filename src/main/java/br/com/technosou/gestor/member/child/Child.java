@@ -3,6 +3,7 @@ package br.com.technosou.gestor.member.child;
 import br.com.technosou.gestor.batism.Batism;
 import br.com.technosou.gestor.enums.AgeGroup;
 import br.com.technosou.gestor.enums.ChildRole;
+import br.com.technosou.gestor.group.Group;
 import br.com.technosou.gestor.member.Member;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
@@ -19,11 +20,6 @@ import java.util.Objects;
 public class Child extends Member implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @Column(nullable = true, length = 13)
-    private String phone;
-
-    private String groupId;
 
     @Embedded
     private Batism batism;
@@ -54,18 +50,12 @@ public class Child extends Member implements Serializable {
     @Column(nullable = true, length = 300)
     public String allergy;
 
-    private boolean isImageAuthorized = true;
-    private boolean isActive = true;
-    private LocalDateTime createdAt = LocalDateTime.now();
-
     public Child() {
         super();
     }
 
-    public Child(Long id, String firstName, String lastName, Date birthdate, String gender, String email, String phone, String groupId, String phone1, String groupId1, Batism batism, List<Adult> parents, ChildRole role, AgeGroup ageGroup, String medication, String specialNeed, String allergy, boolean isImageAuthorized, boolean isActive, LocalDateTime createdAt) {
-        super(id, firstName, lastName, birthdate, gender, email, phone, groupId);
-        this.phone = phone1;
-        this.groupId = groupId1;
+    public Child(Long id, String firstName, String lastName, Date birthdate, String gender, String email, String phone, Group group, boolean isImageAuthorized, boolean isActive, LocalDateTime createdAt, Batism batism, List<Adult> parents, ChildRole role, AgeGroup ageGroup, String medication, String specialNeed, String allergy) {
+        super(id, firstName, lastName, birthdate, gender, email, phone, group, isImageAuthorized, isActive, createdAt);
         this.batism = batism;
         this.parents = parents;
         this.role = role;
@@ -73,29 +63,6 @@ public class Child extends Member implements Serializable {
         this.medication = medication;
         this.specialNeed = specialNeed;
         this.allergy = allergy;
-        this.isImageAuthorized = isImageAuthorized;
-        this.isActive = isActive;
-        this.createdAt = createdAt;
-    }
-
-    @Override
-    public String getPhone() {
-        return phone;
-    }
-
-    @Override
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    @Override
-    public String getGroupId() {
-        return groupId;
-    }
-
-    @Override
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
     }
 
     public Batism getBatism() {
@@ -154,39 +121,28 @@ public class Child extends Member implements Serializable {
         this.allergy = allergy;
     }
 
-    public boolean isImageAuthorized() {
-        return isImageAuthorized;
-    }
-
-    public void setImageAuthorized(boolean imageAuthorized) {
-        isImageAuthorized = imageAuthorized;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Child child = (Child) o;
-        return isImageAuthorized == child.isImageAuthorized && isActive == child.isActive && Objects.equals(phone, child.phone) && Objects.equals(groupId, child.groupId) && Objects.equals(batism, child.batism) && Objects.equals(parents, child.parents) && role == child.role && ageGroup == child.ageGroup && Objects.equals(medication, child.medication) && Objects.equals(specialNeed, child.specialNeed) && Objects.equals(allergy, child.allergy) && Objects.equals(createdAt, child.createdAt);
+        return Objects.equals(batism, child.batism) && Objects.equals(parents, child.parents) && role == child.role && ageGroup == child.ageGroup && Objects.equals(medication, child.medication) && Objects.equals(specialNeed, child.specialNeed) && Objects.equals(allergy, child.allergy);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(phone, groupId, batism, parents, role, ageGroup, medication, specialNeed, allergy, isImageAuthorized, isActive, createdAt);
+        return Objects.hash(batism, parents, role, ageGroup, medication, specialNeed, allergy);
+    }
+
+    @Override
+    public String toString() {
+        return "Child{" +
+                "batism=" + batism +
+                ", parents=" + parents +
+                ", role=" + role +
+                ", ageGroup=" + ageGroup +
+                ", medication='" + medication + '\'' +
+                ", specialNeed='" + specialNeed + '\'' +
+                ", allergy='" + allergy + '\'' +
+                '}';
     }
 }
