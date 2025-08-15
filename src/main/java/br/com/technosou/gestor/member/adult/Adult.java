@@ -229,7 +229,7 @@ public class Adult extends Member implements Serializable {
         entity.setCity(dto.getCity());
         entity.setState(dto.getState());
         entity.setNeighborhood(dto.getNeighborhood());
-        entity.setBatism(dto.getBatism());
+//        entity.setBatism(dto.getBatism());
         entity.setCivilStatus(dto.getCivilStatus());
         entity.setSpouseId(dto.getSpouseId());
 //        entity.setChildren(dto.getChildrenIds());
