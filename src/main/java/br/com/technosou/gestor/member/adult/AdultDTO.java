@@ -3,6 +3,8 @@ package br.com.technosou.gestor.member.adult;
 import br.com.technosou.gestor.batism.BatismDTO;
 import br.com.technosou.gestor.enums.CivilStatus;
 import br.com.technosou.gestor.enums.Role;
+import br.com.technosou.gestor.group.GroupSummaryDTO;
+import br.com.technosou.gestor.location.LocationDTO;
 import br.com.technosou.gestor.member.child.ChildSummaryDTO;
 import br.com.technosou.gestor.serializer.GenderSerializer;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -16,11 +18,10 @@ import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@XmlRootElement(name = "person")
+@XmlRootElement(name = "adults")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AdultDTO extends RepresentationModel<AdultDTO> implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -48,25 +49,10 @@ public class AdultDTO extends RepresentationModel<AdultDTO> implements Serializa
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String phone;
 
-    private String groupId;
+    private GroupSummaryDTO group;
 
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private String zipCode;
-
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private String street;
-
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private String houseNumber;
-
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private String city;
-
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private String state;
-
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private String neighborhood;
+    @Embedded
+    private LocationDTO location;
 
     @Embedded
     private BatismDTO batism;
@@ -86,6 +72,27 @@ public class AdultDTO extends RepresentationModel<AdultDTO> implements Serializa
     private LocalDateTime createdAt = LocalDateTime.now();
 
     public AdultDTO() {}
+
+    public AdultDTO(Long id, String firstName, String lastName, String gender, Date birthdate, String cpf, String email, String phone, GroupSummaryDTO group, LocationDTO location, BatismDTO batism, CivilStatus civilStatus, AdultSummaryDTO spouse, List<ChildSummaryDTO> children, Role role, boolean isActive, boolean isImageAuthorized, LocalDateTime createdAt) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.birthdate = birthdate;
+        this.cpf = cpf;
+        this.email = email;
+        this.phone = phone;
+        this.group = group;
+        this.location = location;
+        this.batism = batism;
+        this.civilStatus = civilStatus;
+        this.spouse = spouse;
+        this.children = children;
+        this.role = role;
+        this.isActive = isActive;
+        this.isImageAuthorized = isImageAuthorized;
+        this.createdAt = createdAt;
+    }
 
     public Long getId() {
         return id;
@@ -151,60 +158,20 @@ public class AdultDTO extends RepresentationModel<AdultDTO> implements Serializa
         this.phone = phone;
     }
 
-    public String getGroupId() {
-        return groupId;
+    public GroupSummaryDTO getGroup() {
+        return group;
     }
 
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
+    public void setGroup(GroupSummaryDTO group) {
+        this.group = group;
     }
 
-    public String getZipCode() {
-        return zipCode;
+    public LocationDTO getLocation() {
+        return location;
     }
 
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getHouseNumber() {
-        return houseNumber;
-    }
-
-    public void setHouseNumber(String houseNumber) {
-        this.houseNumber = houseNumber;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getNeighborhood() {
-        return neighborhood;
-    }
-
-    public void setNeighborhood(String neighborhood) {
-        this.neighborhood = neighborhood;
+    public void setLocation(LocationDTO location) {
+        this.location = location;
     }
 
     public BatismDTO getBatism() {
@@ -222,15 +189,6 @@ public class AdultDTO extends RepresentationModel<AdultDTO> implements Serializa
     public void setCivilStatus(CivilStatus civilStatus) {
         this.civilStatus = civilStatus;
     }
-
-//    public String getSpouseId() {
-//        return spouseId;
-//    }
-//
-//    public void setSpouseId(String spouseId) {
-//        this.spouseId = spouseId;
-//    }
-
 
     public AdultSummaryDTO getSpouse() {
         return spouse;

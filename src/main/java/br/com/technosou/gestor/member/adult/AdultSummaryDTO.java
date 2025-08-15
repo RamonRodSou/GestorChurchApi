@@ -32,6 +32,15 @@ public class AdultSummaryDTO {
 
     public AdultSummaryDTO() {}
 
+    public AdultSummaryDTO(Long id, String firstName, String lastName, Date birthdate, String email, String phone) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthdate = birthdate;
+        this.email = email;
+        this.phone = phone;
+    }
+
     public Long getId() {
         return id;
     }
