@@ -1,10 +1,10 @@
 package br.com.technosou.gestor.member.adult;
 
 
+import br.com.technosou.gestor.entityCrud.CrudMethods;
 import br.com.technosou.gestor.exception.RequiredObjectIsNullException;
 import br.com.technosou.gestor.exception.ResourceNotFoundException;
 
-import br.com.technosou.gestor.member.child.ChildSummaryDTO;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,23 +16,23 @@ import static br.com.technosou.gestor.mapper.ObjectMapper.parseListObjects;
 import static br.com.technosou.gestor.mapper.ObjectMapper.parseObject;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-import static br.com.technosou.gestor.member.adult.Adult.AdultUpdate;
+import static br.com.technosou.gestor.member.adult.Adult.adultUpdate;
 
 @Service
-public class AdultService {
+public class AdultService implements CrudMethods<AdultDTO, Long> {
 
     @Autowired
     private AdultRepository repository;
 
     private Logger logger = LoggerFactory.getLogger(AdultService.class.getName());
 
+    @Transactional
     public List<AdultDTO> findAll() {
 
-        logger.info("Find all Adults");
+        logger.info("Find all Adults!");
 
         var entities = parseListObjects(repository.findAll(), AdultDTO.class);
         entities.forEach(this::addHateoasLinks);
-
         return entities;
     }
 
@@ -40,53 +40,51 @@ public class AdultService {
     public AdultDTO findById(Long id) {
 
         logger.info("Find Adult by id: " + id);
-
         var entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id " + id + " No records found!"));
 
         var dto = parseObject(entity, AdultDTO.class);
-//        List<ChildSummaryDTO> children = repository.findChildrenByAdultId(id);
-//        dto.setChildren(children);
-
         addHateoasLinks(dto);
         return dto;
     }
 
-    public AdultDTO create(AdultDTO Adult) {
+    public AdultDTO create(AdultDTO adult) {
         
-        if (Adult == null) throw new RequiredObjectIsNullException();
-        logger.info("Create Adult: " + Adult);
+        if (adult == null) throw new RequiredObjectIsNullException();
+        logger.info("Create Adult: " + adult);
 
-        var entity = parseObject(Adult, Adult.class);
+        var entity = parseObject(adult, Adult.class);
         var dto = parseObject(repository.save(entity), AdultDTO.class);
 
         addHateoasLinks(dto);
-        return Adult;
+        return adult;
     }
 
-    public AdultDTO update(AdultDTO Adult) {
+    public AdultDTO update(AdultDTO adult) {
 
-        if (Adult == null) throw new RequiredObjectIsNullException();
-        logger.info("Update Adult: " + Adult);
+        if (adult == null) throw new RequiredObjectIsNullException();
+        logger.info("Update Adult: " + adult);
 
-        var entity = repository.findById(Adult.getId()).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
-        var entityUpdated = AdultUpdate(Adult, entity);
+        var entity = repository.findById(adult.getId()).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+        var entityUpdated = adultUpdate(adult, entity);
         var dto = parseObject(repository.save(entityUpdated), AdultDTO.class);
 
         addHateoasLinks(dto);
-        return Adult;
+        return adult;
     }
 
     public void delete(Long id) {
-
         logger.info("Delete Adult: " + id);
         var entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+
+        if (entity.getChildren() != null) {
+            entity.getChildren().forEach(it -> it.getParents().remove(entity));
+        }
 
         repository.delete(entity);
     }
 
     public void addHateoasLinks(AdultDTO dto) {
-
-        dto.add(linkTo(methodOn(AdultController.class).findbyId(dto.getId())).withSelfRel().withType("GET"));
+        dto.add(linkTo(methodOn(AdultController.class).findById(dto.getId())).withSelfRel().withType("GET"));
         dto.add(linkTo(methodOn(AdultController.class).findAll()).withRel("findlAll").withType("GET"));
         dto.add(linkTo(methodOn(AdultController.class).create(dto)).withRel("create").withType("POST"));
         dto.add(linkTo(methodOn(AdultController.class).update(dto)).withRel("update").withType("PUT"));
