@@ -1,5 +1,7 @@
 package br.com.technosou.gestor.member;
 
+import br.com.technosou.gestor.batism.Batism;
+import br.com.technosou.gestor.enums.Gender;
 import br.com.technosou.gestor.group.Group;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -24,8 +26,9 @@ public abstract class Member {
     @Column(name = "birth_date", nullable = false)
     private Date birthdate;
 
-    @Column(nullable = false, length = 6)
-    private String gender;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     @Column(length = 100)
     private String email;
@@ -38,6 +41,9 @@ public abstract class Member {
     @JsonManagedReference
     private Group group;
 
+    @Embedded
+    private Batism batism;
+
     @Column(nullable = false)
     private boolean isImageAuthorized = true;
 
@@ -48,7 +54,7 @@ public abstract class Member {
 
     public Member() {}
 
-    public Member(Long id, String firstName, String lastName, Date birthdate, String gender, String email, String phone, Group group, boolean isImageAuthorized, boolean isActive, LocalDateTime createdAt) {
+    public Member(Long id, String firstName, String lastName, Date birthdate, Gender gender, String email, String phone, Group group, Batism batism, boolean isImageAuthorized, boolean isActive, LocalDateTime createdAt) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -57,6 +63,7 @@ public abstract class Member {
         this.email = email;
         this.phone = phone;
         this.group = group;
+        this.batism = batism;
         this.isImageAuthorized = isImageAuthorized;
         this.isActive = isActive;
         this.createdAt = createdAt;
@@ -94,11 +101,11 @@ public abstract class Member {
         this.birthdate = birthdate;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
@@ -124,6 +131,14 @@ public abstract class Member {
 
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+    public Batism getBatism() {
+        return batism;
+    }
+
+    public void setBatism(Batism batism) {
+        this.batism = batism;
     }
 
     public boolean isImageAuthorized() {
