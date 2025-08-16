@@ -3,6 +3,7 @@ package br.com.technosou.gestor.member.adult;
 import br.com.technosou.gestor.batism.Batism;
 import br.com.technosou.gestor.batism.BatismDTO;
 import br.com.technosou.gestor.enums.CivilStatus;
+import br.com.technosou.gestor.enums.Gender;
 import br.com.technosou.gestor.enums.Role;
 import br.com.technosou.gestor.group.Group;
 import br.com.technosou.gestor.location.Location;
@@ -31,9 +32,6 @@ public class Adult extends Member implements Serializable {
     @Embedded
     private Location location;
 
-    @Embedded
-    private Batism batism;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "civil_status", nullable = false)
     private CivilStatus civilStatus;
@@ -53,11 +51,10 @@ public class Adult extends Member implements Serializable {
         super();
     }
 
-    public Adult(Long id, String firstName, String lastName, Date birthdate, String gender, String email, String phone, Group group, boolean isImageAuthorized, boolean isActive, LocalDateTime createdAt, String cpf, Location location, Batism batism, CivilStatus civilStatus, Adult spouse, List<Child> children, Role role) {
-        super(id, firstName, lastName, birthdate, gender, email, phone, group, isImageAuthorized, isActive, createdAt);
+    public Adult(Long id, String firstName, String lastName, Date birthdate, Gender gender, String email, String phone, Group group, Batism batism, boolean isImageAuthorized, boolean isActive, LocalDateTime createdAt, String cpf, Location location, CivilStatus civilStatus, Adult spouse, List<Child> children, Role role) {
+        super(id, firstName, lastName, birthdate, gender, email, phone, group, batism, isImageAuthorized, isActive, createdAt);
         this.cpf = cpf;
         this.location = location;
-        this.batism = batism;
         this.civilStatus = civilStatus;
         this.spouse = spouse;
         this.children = children;
@@ -78,14 +75,6 @@ public class Adult extends Member implements Serializable {
 
     public void setLocation(Location location) {
         this.location = location;
-    }
-
-    public Batism getBatism() {
-        return batism;
-    }
-
-    public void setBatism(Batism batism) {
-        this.batism = batism;
     }
 
     public CivilStatus getCivilStatus() {
@@ -120,7 +109,7 @@ public class Adult extends Member implements Serializable {
         this.role = role;
     }
 
-    public static Adult AdultUpdate(AdultDTO dto, Adult entity) {
+    public static Adult adultUpdate(AdultDTO dto, Adult entity) {
         entity.setFirstName(dto.getFirstName());
         entity.setLastName(dto.getLastName());
         entity.setBirthdate(dto.getBirthdate());
@@ -147,11 +136,11 @@ public class Adult extends Member implements Serializable {
 
         if (entity.getChildren() != null) {
            var children = entity.getChildren().stream()
-                    .map(child -> new ChildSummaryDTO(
-                            child.getId(),
-                            child.getFirstName(),
-                            child.getLastName(),
-                            child.getPhone()
+                    .map(it -> new ChildSummaryDTO(
+                            it.getId(),
+                            it.getFirstName(),
+                            it.getLastName(),
+                            it.getPhone()
                     ))
                     .toList();
         }
@@ -182,12 +171,12 @@ public class Adult extends Member implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Adult adult = (Adult) o;
-        return Objects.equals(cpf, adult.cpf) && Objects.equals(location, adult.location) && Objects.equals(batism, adult.batism) && civilStatus == adult.civilStatus && Objects.equals(spouse, adult.spouse) && Objects.equals(children, adult.children) && role == adult.role;
+        return Objects.equals(cpf, adult.cpf) && Objects.equals(location, adult.location) && civilStatus == adult.civilStatus && Objects.equals(spouse, adult.spouse) && Objects.equals(children, adult.children) && role == adult.role;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), cpf, location, batism, civilStatus, spouse, children, role);
+        return Objects.hash(super.hashCode(), cpf, location, civilStatus, spouse, children, role);
     }
 
     @Override
@@ -195,7 +184,6 @@ public class Adult extends Member implements Serializable {
         return "Adult{" +
                 "cpf='" + cpf + '\'' +
                 ", location=" + location +
-                ", batism=" + batism +
                 ", civilStatus=" + civilStatus +
                 ", spouse=" + spouse +
                 ", children=" + children +
