@@ -3,7 +3,7 @@ CREATE TABLE adults (
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL,
     birth_date DATE NOT NULL,
-    gender VARCHAR(10) NOT NULL,
+    gender ENUM('FEMALE', 'MALE') NOT NULL,
     cpf VARCHAR(14) NOT NULL UNIQUE,
     email VARCHAR(255),
     phone VARCHAR(20) NOT NULL,
