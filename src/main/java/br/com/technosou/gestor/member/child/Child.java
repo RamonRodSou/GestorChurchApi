@@ -3,8 +3,10 @@ package br.com.technosou.gestor.member.child;
 import br.com.technosou.gestor.batism.Batism;
 import br.com.technosou.gestor.enums.AgeGroup;
 import br.com.technosou.gestor.enums.ChildRole;
+import br.com.technosou.gestor.enums.Gender;
 import br.com.technosou.gestor.group.Group;
 import br.com.technosou.gestor.member.Member;
+import br.com.technosou.gestor.member.adult.AdultSummaryDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import br.com.technosou.gestor.member.adult.Adult;
@@ -25,7 +27,7 @@ public class Child extends Member implements Serializable {
     private Batism batism;
 
     @JsonBackReference
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "child_parents",
             joinColumns = @JoinColumn(name = "child_id"),
@@ -54,9 +56,9 @@ public class Child extends Member implements Serializable {
         super();
     }
 
-    public Child(Long id, String firstName, String lastName, Date birthdate, String gender, String email, String phone, Group group, boolean isImageAuthorized, boolean isActive, LocalDateTime createdAt, Batism batism, List<Adult> parents, ChildRole role, AgeGroup ageGroup, String medication, String specialNeed, String allergy) {
-        super(id, firstName, lastName, birthdate, gender, email, phone, group, isImageAuthorized, isActive, createdAt);
-        this.batism = batism;
+    public Child(Long id, String firstName, String lastName, Date birthdate, Gender gender, String email, String phone, Group group, Batism batism, boolean isImageAuthorized, boolean isActive, LocalDateTime createdAt, Batism batism1, List<Adult> parents, ChildRole role, AgeGroup ageGroup, String medication, String specialNeed, String allergy) {
+        super(id, firstName, lastName, birthdate, gender, email, phone, group, batism, isImageAuthorized, isActive, createdAt);
+        this.batism = batism1;
         this.parents = parents;
         this.role = role;
         this.ageGroup = ageGroup;
@@ -119,6 +121,35 @@ public class Child extends Member implements Serializable {
 
     public void setAllergy(String allergy) {
         this.allergy = allergy;
+    }
+
+    public static Child childUpdate(ChildDTO dto, Child entity) {
+        entity.setFirstName(dto.getFirstName());
+        entity.setLastName(dto.getLastName());
+        entity.setBirthdate(dto.getBirthdate());
+        entity.setGender(dto.getGender());
+        entity.setEmail(dto.getEmail());
+        entity.setPhone(dto.getPhone());
+        entity.setRole(dto.getRole());
+        entity.setAgeGroup(dto.getAgeGroup());
+        entity.setMedication(dto.getMedication());
+        entity.setSpecialNeed(dto.getSpecialNeed());
+        entity.setAllergy(dto.getAllergy());
+
+        if (entity.getParents() != null) {
+            var parent = entity.getParents().stream()
+                    .map(it -> new AdultSummaryDTO(
+                            it.getId(),
+                            it.getFirstName(),
+                            it.getLastName(),
+                            it.getBirthdate(),
+                            it.getEmail(),
+                            it.getPhone()
+                    ))
+                    .toList();
+        }
+
+        return entity;
     }
 
     @Override
