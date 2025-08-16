@@ -8,6 +8,7 @@ import br.com.technosou.gestor.group.Group;
 import br.com.technosou.gestor.member.Member;
 import br.com.technosou.gestor.member.adult.AdultSummaryDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import br.com.technosou.gestor.member.adult.Adult;
 
@@ -22,9 +23,6 @@ import java.util.Objects;
 public class Child extends Member implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @Embedded
-    private Batism batism;
 
     @JsonBackReference
     @ManyToMany(fetch = FetchType.EAGER)
@@ -56,23 +54,14 @@ public class Child extends Member implements Serializable {
         super();
     }
 
-    public Child(Long id, String firstName, String lastName, Date birthdate, Gender gender, String email, String phone, Group group, Batism batism, boolean isImageAuthorized, boolean isActive, LocalDateTime createdAt, Batism batism1, List<Adult> parents, ChildRole role, AgeGroup ageGroup, String medication, String specialNeed, String allergy) {
+    public Child(Long id, String firstName, String lastName, Date birthdate, Gender gender, String email, String phone, Group group, Batism batism, boolean isImageAuthorized, boolean isActive, LocalDateTime createdAt, List<Adult> parents, ChildRole role, AgeGroup ageGroup, String medication, String specialNeed, String allergy) {
         super(id, firstName, lastName, birthdate, gender, email, phone, group, batism, isImageAuthorized, isActive, createdAt);
-        this.batism = batism1;
         this.parents = parents;
         this.role = role;
         this.ageGroup = ageGroup;
         this.medication = medication;
         this.specialNeed = specialNeed;
         this.allergy = allergy;
-    }
-
-    public Batism getBatism() {
-        return batism;
-    }
-
-    public void setBatism(Batism batism) {
-        this.batism = batism;
     }
 
     public List<Adult> getParents() {
@@ -156,18 +145,17 @@ public class Child extends Member implements Serializable {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Child child = (Child) o;
-        return Objects.equals(batism, child.batism) && Objects.equals(parents, child.parents) && role == child.role && ageGroup == child.ageGroup && Objects.equals(medication, child.medication) && Objects.equals(specialNeed, child.specialNeed) && Objects.equals(allergy, child.allergy);
+        return Objects.equals(parents, child.parents) && role == child.role && ageGroup == child.ageGroup && Objects.equals(medication, child.medication) && Objects.equals(specialNeed, child.specialNeed) && Objects.equals(allergy, child.allergy);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(batism, parents, role, ageGroup, medication, specialNeed, allergy);
+        return Objects.hash(parents, role, ageGroup, medication, specialNeed, allergy);
     }
 
     @Override
     public String toString() {
         return "Child{" +
-                "batism=" + batism +
                 ", parents=" + parents +
                 ", role=" + role +
                 ", ageGroup=" + ageGroup +

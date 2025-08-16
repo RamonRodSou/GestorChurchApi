@@ -26,6 +26,9 @@ public class ChildSummaryDTO {
         this.phone = phone;
     }
 
+    public ChildSummaryDTO(Long id) {
+    }
+
     public Long getId() {
         return id;
     }

@@ -70,7 +70,6 @@ public class AdultDTO extends MemberDTO<AdultDTO> implements Serializable {
         this.location = location;
     }
 
-
     public CivilStatus getCivilStatus() {
         return civilStatus;
     }

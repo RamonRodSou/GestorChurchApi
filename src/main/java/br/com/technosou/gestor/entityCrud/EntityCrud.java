@@ -40,7 +40,7 @@ public abstract class EntityCrud<T, ID, S extends CrudMethods<T, ID>>{
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }
     )
     public T update(@RequestBody T dto) {
-        return service.create(dto);
+        return service.update(dto);
     }
 
     @DeleteMapping(
