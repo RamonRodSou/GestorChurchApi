@@ -78,7 +78,7 @@ public class ChildService implements CrudMethods<ChildDTO, Long> {
         repository.delete(entity);
     }
 
-    public void addHateoasLinks(ChildDTO dto) {
+    private void addHateoasLinks(ChildDTO dto) {
         dto.add(linkTo(methodOn(ChildController.class).findById(dto.getId())).withSelfRel().withType("GET"));
         dto.add(linkTo(methodOn(ChildController.class).findAll()).withRel("findlAll").withType("GET"));
         dto.add(linkTo(methodOn(ChildController.class).create(dto)).withRel("create").withType("POST"));

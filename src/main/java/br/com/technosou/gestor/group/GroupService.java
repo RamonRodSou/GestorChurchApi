@@ -88,7 +88,7 @@ public class GroupService implements CrudMethods<GroupDTO, Long> {
         repository.delete(entity);
     }
 
-    public void addHateoasLinks(GroupDTO dto) {
+    private void addHateoasLinks(GroupDTO dto) {
         dto.add(linkTo(methodOn(GroupController.class).findById(dto.getId())).withSelfRel().withType("GET"));
         dto.add(linkTo(methodOn(GroupController.class).findAll()).withRel("findlAll").withType("GET"));
         dto.add(linkTo(methodOn(GroupController.class).create(dto)).withRel("create").withType("POST"));
@@ -96,7 +96,7 @@ public class GroupService implements CrudMethods<GroupDTO, Long> {
         dto.add(linkTo(methodOn(GroupController.class).delete(dto.getId())).withRel("delete").withType("DELETE"));
     }
 
-    void removeMember(Group group) {
+    private void removeMember(Group group) {
         if (group.getLeaders() != null) {
             group.getLeaders().forEach(it -> it.setGroup(null));
                 adultRepository.saveAll(group.getLeaders());

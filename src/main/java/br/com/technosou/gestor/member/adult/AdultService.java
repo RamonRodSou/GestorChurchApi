@@ -63,18 +63,7 @@ public class AdultService implements CrudMethods<AdultDTO, Long> {
         var saved = parseObject(repository.save(entity), AdultDTO.class);
         addHateoasLinks(saved);
 
-        if(dto.getChildren() != null && !dto.getChildren().isEmpty()){
-            List<Child> children = dto.getChildren().stream()
-                    .map(c -> childRepository.findById(c.getId())
-                            .orElseThrow(() -> new ResourceNotFoundException(" Child not found with id: " + c.getId())))
-                    .toList();
-            children.forEach(child -> {
-                if (child.getParents() == null) {
-                    child.setParents(new ArrayList<>());
-                }
-                child.getParents().add(entity);
-            });
-        }
+        validtChildren(dto, entity);
         return saved;
     }
 
@@ -104,7 +93,7 @@ public class AdultService implements CrudMethods<AdultDTO, Long> {
         repository.delete(entity);
     }
 
-    public void addHateoasLinks(AdultDTO dto) {
+    private void addHateoasLinks(AdultDTO dto) {
         dto.add(linkTo(methodOn(AdultController.class).findById(dto.getId())).withSelfRel().withType("GET"));
         dto.add(linkTo(methodOn(AdultController.class).findAll()).withRel("findlAll").withType("GET"));
         dto.add(linkTo(methodOn(AdultController.class).create(dto)).withRel("create").withType("POST"));
@@ -112,4 +101,18 @@ public class AdultService implements CrudMethods<AdultDTO, Long> {
         dto.add(linkTo(methodOn(AdultController.class).delete(dto.getId())).withRel("delete").withType("DELETE"));
     }
 
+    private void validateChildren(AdultDTO dto, Adult entity) {
+        if (dto.getChildren() != null && !dto.getChildren().isEmpty()) {
+            List<Child> children = dto.getChildren().stream()
+                    .map(c -> childRepository.findById(c.getId())
+                            .orElseThrow(() -> new ResourceNotFoundException(" Child not found with id: " + c.getId())))
+                    .toList();
+            children.forEach(child -> {
+                if (child.getParents() == null) {
+                    child.setParents(new ArrayList<>());
+                }
+                child.getParents().add(entity);
+            });
+        }
+    }
 }
