@@ -2,8 +2,11 @@ package br.com.technosou.gestor.group;
 
 import br.com.technosou.gestor.enums.WeekDays;
 import br.com.technosou.gestor.location.Location;
+import br.com.technosou.gestor.location.LocationDTO;
 import br.com.technosou.gestor.member.adult.Adult;
+import br.com.technosou.gestor.member.adult.AdultSummaryDTO;
 import br.com.technosou.gestor.member.child.Child;
+import br.com.technosou.gestor.member.child.ChildSummaryDTO;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -111,7 +114,7 @@ public class Group implements Serializable {
         return leaders;
     }
 
-    public void setLeaders(List<Adult> leaders) {
+    public void setLeaders() {
         this.leaders = leaders;
     }
 
@@ -145,6 +148,49 @@ public class Group implements Serializable {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public static Group groupUpdate(GroupDTO dto, Group entity) {
+        entity.setName(dto.getName());
+        entity.setWeekDay(dto.getWeekDay());
+        entity.setLocation(dto.getLocation());
+        entity.setActive(dto.isActive());
+
+        if (entity.getLocation() != null) {
+            var location = new LocationDTO(
+                    entity.getLocation().getZipCode(),
+                    entity.getLocation().getStreet(),
+                    entity.getLocation().getHouseNumber(),
+                    entity.getLocation().getCity(),
+                    entity.getLocation().getState(),
+                    entity.getLocation().getNeighborhood()
+            );
+        }
+
+        if (entity.getLeaders() != null) {
+            var leaders = entity.getLeaders().stream()
+                    .map(it -> new AdultSummaryDTO(
+                            it.getId()
+                    ))
+                    .toList();
+        }
+
+        if (entity.getChildren() != null) {
+            var members = entity.getChildren().stream()
+                    .map(it -> new AdultSummaryDTO(
+                            it.getId()
+                    ))
+                    .toList();
+        }
+
+        if (entity.getChildren() != null) {
+            var children = entity.getChildren().stream()
+                    .map(it -> new ChildSummaryDTO(
+                            it.getId()
+                    ))
+                    .toList();
+        }
+        return entity;
     }
 
     @Override
