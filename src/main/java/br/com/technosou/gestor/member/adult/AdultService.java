@@ -28,6 +28,7 @@ public class AdultService implements CrudMethods<AdultDTO, Long> {
     private AdultRepository repository;
 
     private Logger logger = LoggerFactory.getLogger(AdultService.class.getName());
+
     @Autowired
     private ChildRepository childRepository;
 
@@ -53,17 +54,17 @@ public class AdultService implements CrudMethods<AdultDTO, Long> {
     }
 
     @Transactional
-    public AdultDTO create(AdultDTO adult) {
+    public AdultDTO create(AdultDTO dto) {
 
-        if (adult == null) throw new RequiredObjectIsNullException();
-        logger.info("Create Adult: " + adult);
+        if (dto == null) throw new RequiredObjectIsNullException();
+        logger.info("Create Adult: " + dto);
 
-        var entity = parseObject(adult, Adult.class);
-        var dto = parseObject(repository.save(entity), AdultDTO.class);
-        addHateoasLinks(dto);
+        var entity = parseObject(dto, Adult.class);
+        var saved = parseObject(repository.save(entity), AdultDTO.class);
+        addHateoasLinks(saved);
 
-        if(adult.getChildren() != null && !adult.getChildren().isEmpty()){
-            List<Child> children = adult.getChildren().stream()
+        if(dto.getChildren() != null && !dto.getChildren().isEmpty()){
+            List<Child> children = dto.getChildren().stream()
                     .map(c -> childRepository.findById(c.getId())
                             .orElseThrow(() -> new ResourceNotFoundException(" Child not found with id: " + c.getId())))
                     .toList();
@@ -74,22 +75,21 @@ public class AdultService implements CrudMethods<AdultDTO, Long> {
                 child.getParents().add(entity);
             });
         }
-
-
-        return dto;
+        return saved;
     }
 
     @Transactional
-    public AdultDTO update(AdultDTO adult) {
+    public AdultDTO update(AdultDTO dto) {
 
-        if (adult == null) throw new RequiredObjectIsNullException();
-        logger.info("Update Adult: " + adult);
-        var entity = repository.findById(adult.getId()).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
-        var entityUpdated = adultUpdate(adult, entity);
-        var dto = parseObject(repository.save(entityUpdated), AdultDTO.class);
+        if (dto == null) throw new RequiredObjectIsNullException();
+        logger.info("Update Adult: " + dto);
 
-        addHateoasLinks(dto);
-        return dto;
+        var entity = repository.findById(dto.getId()).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+        var entityUpdated = adultUpdate(dto, entity);
+        var saved = parseObject(repository.save(entityUpdated), AdultDTO.class);
+
+        addHateoasLinks(saved);
+        return saved;
     }
 
     @Transactional
@@ -111,4 +111,5 @@ public class AdultService implements CrudMethods<AdultDTO, Long> {
         dto.add(linkTo(methodOn(AdultController.class).update(dto)).withRel("update").withType("PUT"));
         dto.add(linkTo(methodOn(AdultController.class).delete(dto.getId())).withRel("delete").withType("DELETE"));
     }
+
 }

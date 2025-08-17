@@ -121,7 +121,6 @@ public class Adult extends Member implements Serializable {
         entity.setRole(dto.getRole());
         entity.setImageAuthorized(dto.isImageAuthorized());
         entity.setActive(dto.isActive());
-        entity.setCreatedAt(dto.getCreatedAt());
 
         if (entity.getSpouse() != null) {
             var spouse = new AdultSummaryDTO(
