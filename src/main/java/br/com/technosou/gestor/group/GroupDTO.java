@@ -2,8 +2,8 @@ package br.com.technosou.gestor.group;
 
 import br.com.technosou.gestor.enums.WeekDays;
 import br.com.technosou.gestor.location.Location;
-import br.com.technosou.gestor.member.adult.Adult;
-import br.com.technosou.gestor.member.child.Child;
+import br.com.technosou.gestor.member.adult.AdultSummaryDTO;
+import br.com.technosou.gestor.member.child.ChildSummaryDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -34,11 +34,11 @@ public class GroupDTO extends RepresentationModel<GroupDTO>  implements Serializ
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Location location;
 
-    private List<Adult> leaders;
+    private List<AdultSummaryDTO> leaders;
 
-    private List<Adult> members;
+    private List<AdultSummaryDTO> members;
 
-    private List<Child> children;
+    private List<ChildSummaryDTO> children;
 
     private boolean isActive = true;
 
@@ -46,7 +46,7 @@ public class GroupDTO extends RepresentationModel<GroupDTO>  implements Serializ
 
     public GroupDTO() {}
 
-    public GroupDTO(Long id, String name, WeekDays weekDay, Location location, List<Adult> leaders, List<Adult> members, List<Child> children, boolean isActive, LocalDateTime createdAt) {
+    public GroupDTO(Long id, String name, WeekDays weekDay, Location location, List<AdultSummaryDTO> leaders, List<AdultSummaryDTO> members, List<ChildSummaryDTO> children, boolean isActive, LocalDateTime createdAt) {
         this.id = id;
         this.name = name;
         this.weekDay = weekDay;
@@ -90,27 +90,27 @@ public class GroupDTO extends RepresentationModel<GroupDTO>  implements Serializ
         this.location = location;
     }
 
-    public List<Adult> getLeaders() {
+    public List<AdultSummaryDTO> getLeaders() {
         return leaders;
     }
 
-    public void setLeaders(List<Adult> leaders) {
+    public void setLeaders(List<AdultSummaryDTO> leaders) {
         this.leaders = leaders;
     }
 
-    public List<Adult> getMembers() {
+    public List<AdultSummaryDTO> getMembers() {
         return members;
     }
 
-    public void setMembers(List<Adult> members) {
+    public void setMembers(List<AdultSummaryDTO> members) {
         this.members = members;
     }
 
-    public List<Child> getChildren() {
+    public List<ChildSummaryDTO> getChildren() {
         return children;
     }
 
-    public void setChildren(List<Child> children) {
+    public void setChildren(List<ChildSummaryDTO> children) {
         this.children = children;
     }
 
