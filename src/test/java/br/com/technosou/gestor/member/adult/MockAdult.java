@@ -14,7 +14,6 @@ import br.com.technosou.gestor.member.child.ChildSummaryDTO;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static br.com.technosou.gestor.ultils.DateUtils.formatPtBr;
@@ -22,7 +21,7 @@ import static br.com.technosou.gestor.ultils.DateUtils.formatPtBr;
 public class MockAdult {
 
     public Adult mockEntity() throws ParseException {
-        return mockEntity(0L);
+        return mockEntity(1L);
     }
 
     public Adult mockEntity(Long id) throws ParseException {
@@ -45,8 +44,16 @@ public class MockAdult {
         return entity;
     }
 
+    public List<Adult> mockEntityList() throws ParseException {
+        List<Adult> entities = new ArrayList<>();
+        for (Long i = 0L; i < 10; i++) {
+           entities.add(mockEntity(i));
+        }
+        return entities;
+    }
+
     public AdultDTO mockDTO() throws ParseException {
-        return mockDTO(0L);
+        return mockDTO(1L);
     }
 
     public AdultDTO mockDTO(Long id) throws ParseException {
@@ -96,9 +103,11 @@ public class MockAdult {
 
     public List<Child> mockChildList() throws ParseException {
         List<Child> children = new ArrayList<Child>();
-        for (Long i = 0L; i < 3; i++) {
-            children.add(mockChild(i));
-        }
+        Child child = mockChild(1L);
+        children.add(child);
+//        for (Long i = id; i < 3; i++) {
+//            children.add(mockChild(i));
+//        }
         return children;
     }
 
@@ -106,15 +115,18 @@ public class MockAdult {
         var dto = new ChildSummaryDTO();
         dto.setId(id);
         dto.setFirstName("Antonio" + id);
-        dto.setLastName("Rodrigues"  + id);
+        dto.setLastName("Rodrigues" + id);
         return dto;
     }
 
     public List<ChildSummaryDTO> mockChildSummaryDTOList() {
         List<ChildSummaryDTO> children = new ArrayList<ChildSummaryDTO>();
-        for (Long i = 0L; i < 3; i++) {
-            children.add(mockChildSummaryDTO(i));
-        }
+        ChildSummaryDTO child = mockChildSummaryDTO(1L);
+        children.add(child);
+//        for (Long i = 0L; i < 3; i++) {
+//            children.add(mockChildSummaryDTO(i));
+//        }
+        System.out.println("children: " + children.get(0).getId());
         return children;
     }
 

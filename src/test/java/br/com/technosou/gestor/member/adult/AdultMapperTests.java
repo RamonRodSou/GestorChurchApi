@@ -10,7 +10,11 @@ import org.junit.jupiter.api.Test;
 
 import java.text.ParseException;
 
+import java.util.List;
+
 import static br.com.technosou.gestor.ultils.DateUtils.formatPtBr;
+import static br.com.technosou.gestor.mapper.ObjectMapper.parseObject;
+import static br.com.technosou.gestor.mapper.ObjectMapper.parseListObjects;
 
 public class AdultMapperTests {
 
@@ -23,21 +27,29 @@ public class AdultMapperTests {
 
     @Test
     public void parseEntityToDTOTest() throws ParseException {
-        AdultDTO output = ObjectMapper.parseObject(inputObject.mockEntity(), AdultDTO.class);
-        entityToDTO(output, 0L);
+        AdultDTO output = parseObject(inputObject.mockEntity(), AdultDTO.class);
+        entityToDTO(output, 1L);
+    }
+
+    @Test
+    public void parseEntityListToDTOTest() throws ParseException {
+       List<AdultDTO> outputList = parseListObjects(inputObject.mockEntityList(), AdultDTO.class);
+
+        for (long i = 0; i < 10; i++) {
+            entityToDTO(outputList.get((int) i), Long.parseLong(String.valueOf(i)));
+        }
     }
 
     @Test
     public void parseDTOToEntityTest() throws ParseException {
         Adult output = ObjectMapper.parseObject(inputObject.mockDTO(), Adult.class);
-        DTOToEntity(output, 0L);
+        DTOToEntity(output, 1L);
     }
     
     private void entityToDTO(AdultDTO output, Long id) {
-        Long mockId = id + 1L;
         assertEquals(id, output.getId());
-        assertEquals("Ramon0", output.getFirstName());
-        assertEquals("Rodrigues0", output.getLastName());
+        assertEquals("Ramon" + id, output.getFirstName());
+        assertEquals("Rodrigues" + id, output.getLastName());
         assertEquals("02/07/1993", formatPtBr(output.getBirthdate()));
         assertEquals(Gender.MALE, output.getGender());
         assertEquals(id + "ramon@gmail.com", output.getEmail());
@@ -47,18 +59,15 @@ public class AdultMapperTests {
         assertEquals("123456789" + id, output.getCpf());
         assertEquals("2170020" + id, output.getLocation().getZipCode());
         assertEquals(CivilStatus.MARRIED, output.getCivilStatus());
-        assertEquals(id, output.getChildren().get(0).getId());
-        assertEquals( "Antonio" + id, output.getChildren().get(0).getFirstName());
-        assertEquals(mockId, output.getChildren().get(Math.toIntExact(mockId)).getId());
-        assertEquals( "Antonio" + mockId, output.getChildren().get(Math.toIntExact(mockId)).getFirstName());
+        assertEquals(1L, output.getChildren().get(0).getId());
+        assertEquals( "Antonio" + 1L, output.getChildren().get(0).getFirstName());
         assertEquals(Role.LEADER, output.getRole());
     }
 
     private void DTOToEntity(Adult output, Long id) {
-        Long mockId = id + 1L;
         assertEquals(id, output.getId());
-        assertEquals("Ramon0", output.getFirstName());
-        assertEquals("Rodrigues0", output.getLastName());
+        assertEquals("Ramon" + id, output.getFirstName());
+        assertEquals("Rodrigues" + id, output.getLastName());
         assertEquals("02/07/1993", formatPtBr(output.getBirthdate()));
         assertEquals(Gender.MALE, output.getGender());
         assertEquals(id + "ramon@gmail.com", output.getEmail());
@@ -68,10 +77,9 @@ public class AdultMapperTests {
         assertEquals("123456789" + id, output.getCpf());
         assertEquals("2170020" + id, output.getLocation().getZipCode());
         assertEquals(CivilStatus.MARRIED, output.getCivilStatus());
-        assertEquals(id, output.getChildren().get(0).getId());
-        assertEquals( "Antonio" + id, output.getChildren().get(0).getFirstName());
-        assertEquals(mockId, output.getChildren().get(Math.toIntExact(mockId)).getId());
-        assertEquals( "Antonio" + mockId, output.getChildren().get(Math.toIntExact(mockId)).getFirstName());
+        assertEquals(1L, output.getChildren().get(0).getId());
+        assertEquals( "Antonio" + 1L, output.getChildren().get(0).getFirstName());
+        assertEquals( "Rodrigues" + 1L, output.getChildren().get(0).getLastName());
         assertEquals(Role.LEADER, output.getRole());
     }
 }
