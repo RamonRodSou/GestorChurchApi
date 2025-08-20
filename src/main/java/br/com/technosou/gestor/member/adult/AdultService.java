@@ -63,7 +63,7 @@ public class AdultService implements CrudMethods<AdultDTO, Long> {
         var saved = parseObject(repository.save(entity), AdultDTO.class);
         addHateoasLinks(saved);
 
-        validtChildren(dto, entity);
+        associateParentsWithChildren(dto, entity);
         return saved;
     }
 
@@ -101,7 +101,7 @@ public class AdultService implements CrudMethods<AdultDTO, Long> {
         dto.add(linkTo(methodOn(AdultController.class).delete(dto.getId())).withRel("delete").withType("DELETE"));
     }
 
-    private void validateChildren(AdultDTO dto, Adult entity) {
+    private void associateParentsWithChildren(AdultDTO dto, Adult entity) {
         if (dto.getChildren() != null && !dto.getChildren().isEmpty()) {
             List<Child> children = dto.getChildren().stream()
                     .map(c -> childRepository.findById(c.getId())
