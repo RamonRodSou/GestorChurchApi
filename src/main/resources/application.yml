@@ -15,4 +15,4 @@ spring:
     open-in-view: false
 logging:
   level:
-    root: WARN
+    root: warn
