@@ -77,7 +77,6 @@ public class Group implements Serializable {
         this.createdAt = createdAt;
     }
 
-
     public Long getId() {
         return id;
     }
@@ -114,7 +113,7 @@ public class Group implements Serializable {
         return leaders;
     }
 
-    public void setLeaders() {
+    public void setLeaders(List<Adult> adults) {
         this.leaders = leaders;
     }
 
