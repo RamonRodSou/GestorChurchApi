@@ -1,14 +1,19 @@
 package br.com.technosou.gestor.guest;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "guests")
-public class Guest {
+public class Guest implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +23,7 @@ public class Guest {
     @Column(length = 13)
     private String phone;
 
+    @JdbcTypeCode(SqlTypes.JSON)
     public List<String> visitHistory = new ArrayList<String>();
 
     private boolean isActive = true;
@@ -43,11 +49,11 @@ public class Guest {
         this.id = id;
     }
 
-    public String getNome() {
+    public String getName() {
         return name;
     }
 
-    public void setNome(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -84,7 +90,7 @@ public class Guest {
     }
 
     public static Guest guestUpdate(GuestDTO dto, Guest entity) {
-        entity.setNome(dto.getNome());
+        entity.setName(dto.getName());
         entity.setPhone(dto.getPhone());
         entity.setVisitHistory(dto.getVisitHistory());
         entity.setActive(dto.isActive());

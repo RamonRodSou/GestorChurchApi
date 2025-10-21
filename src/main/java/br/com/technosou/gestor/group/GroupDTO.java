@@ -2,7 +2,6 @@ package br.com.technosou.gestor.group;
 
 import br.com.technosou.gestor.enums.WeekDays;
 import br.com.technosou.gestor.location.Location;
-import br.com.technosou.gestor.location.LocationDTO;
 import br.com.technosou.gestor.member.adult.AdultSummaryDTO;
 import br.com.technosou.gestor.member.child.ChildSummaryDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;

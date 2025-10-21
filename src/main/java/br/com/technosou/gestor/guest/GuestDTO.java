@@ -2,7 +2,6 @@ package br.com.technosou.gestor.guest;
 
 import br.com.technosou.gestor.group.GroupDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.persistence.*;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlRootElement;
@@ -11,6 +10,7 @@ import org.springframework.hateoas.RepresentationModel;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @XmlRootElement(name = "guests")
@@ -27,6 +27,7 @@ public class GuestDTO extends RepresentationModel<GroupDTO> implements Serializa
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String phone;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public List<String> visitHistory = new ArrayList<String>();
 
     private boolean isActive = true;
@@ -52,11 +53,11 @@ public class GuestDTO extends RepresentationModel<GroupDTO> implements Serializa
         this.id = id;
     }
 
-    public String getNome() {
+    public String getName() {
         return name;
     }
 
-    public void setNome(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
