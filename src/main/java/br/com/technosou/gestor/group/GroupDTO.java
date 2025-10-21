@@ -2,6 +2,7 @@ package br.com.technosou.gestor.group;
 
 import br.com.technosou.gestor.enums.WeekDays;
 import br.com.technosou.gestor.location.Location;
+import br.com.technosou.gestor.location.LocationDTO;
 import br.com.technosou.gestor.member.adult.AdultSummaryDTO;
 import br.com.technosou.gestor.member.child.ChildSummaryDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -130,4 +131,18 @@ public class GroupDTO extends RepresentationModel<GroupDTO>  implements Serializ
         this.createdAt = createdAt;
     }
 
+    @Override
+    public String toString() {
+        return "GroupDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", weekDay=" + weekDay +
+                ", location=" + location +
+                ", leaders=" + leaders +
+                ", members=" + members +
+                ", children=" + children +
+                ", isActive=" + isActive +
+                ", createdAt=" + createdAt +
+                '}';
+    }
 }
